@@ -1,6 +1,7 @@
 package com.shop.fruit.controller;
 
 import com.shop.fruit.dto.ItemDto;
+import com.shop.fruit.entity.Item;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,5 +49,58 @@ public class ThymeleafExController {
 
         model.addAttribute("itemDtoList",itemDtoList);
         return "thymeleafEx/thymeleafEx03";
+    }
+
+    @GetMapping(value= "ex04")
+    public String thymeleafEx04(Model model){
+        List<ItemDto> itemDtoList = new ArrayList<>();
+
+        for(int i=1;i<=10;i++){
+            ItemDto itemDto = new ItemDto();
+            itemDto.setItemDetail("상품 상세 설명"+i);
+            itemDto.setItemNm("Apple"+i);
+            itemDto.setPrice(1000*i);
+            itemDto.setRegTime(LocalDateTime.now());
+
+            itemDtoList.add(itemDto);
+        }
+
+        model.addAttribute("itemDtoList", itemDtoList);
+        return "thymeleafEx/thymeleafEx04";
+    }
+
+    @GetMapping(value="ex05")
+    public String thymeleafEx05(Model model){
+        List<ItemDto> itemDtoList = new ArrayList<>();
+        for(int i=1;i<=10;i++){
+            ItemDto itemDto = new ItemDto();
+            itemDto.setItemDetail("Item Detail"+i);
+            itemDto.setItemNm("Apple"+i);
+            itemDto.setPrice(1000*i);
+            itemDto.setRegTime(LocalDateTime.now());
+            itemDtoList.add(itemDto);
+
+        }
+        model.addAttribute("itemDtoList", itemDtoList);
+        return "thymeleafEx/thymeleafEx05";
+    }
+
+    @GetMapping(value="ex06")
+    public String thymeleafEx06(String param1, String param2, Model model){
+        //데이터를 모델에 담아 view로 전달
+        model.addAttribute("param1", param1);
+        model.addAttribute("param2", param2);
+        return "thymeleafEx/thymeleafEx06";
+    }
+
+    // html에서 쓴 매개변수명과 같은 매개변수명을 쓰면 자동 바인딩됨
+    @GetMapping(value="ex07")
+    public String thymeleafEx07(Model model){
+        return "thymeleafEx/thymeleafEx07";
+    }
+
+    @GetMapping(value="ex08")
+    public String thymeleafEx08(){
+        return "thymeleafEx/thymeleafEx08";
     }
 }

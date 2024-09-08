@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>타임리프 링크처리 예제입니당</h1>
+<div>
+  <a th:href="@{/thymeleaf/ex01}">타임리프 ex01 페이지 이동</a>
+</div>
+<div>
+  <a th:href="@{https://www.thymeleaf.org/}">타임리프 공식 페이지 이동</a>
+</div>
+
+<h1>전달받은 파라미터 값 출력해볼게욥</h1>
+<div th:text="${param1}"></div>
+<div th:text="${param2}"></div>
+</body>
+</html>
