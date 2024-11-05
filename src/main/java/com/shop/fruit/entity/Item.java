@@ -2,6 +2,8 @@ package com.shop.fruit.entity;
 
 import com.shop.fruit.constant.ItemSellStatus;
 
+import com.shop.fruit.dto.ItemFormDto;
+import com.shop.fruit.exception.OutOfStockException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @Entity
-public class Item {
+public class Item extends BaseEntity{
 
     @Id
     @Column(name="item_id")
@@ -36,7 +38,19 @@ public class Item {
     @Enumerated(EnumType.STRING)    // string 타입의 enum 데이터를 데이터베이스에 저장
     private ItemSellStatus itemSellStatus;   //상품 판매 상태
 
-    private LocalDateTime regTime;  //등록 시간
+    public void updateItem(ItemFormDto itemFormDto){
+        this.itemNm = itemFormDto.getItemNm();
+        this.price = itemFormDto.getPrice();
+        this.stockNumber = itemFormDto.getStockNumber();
+        this.itemDetail = itemFormDto.getItemDetail();
+        this.itemSellStatus = itemFormDto.getItemSellStatus();
+    }
 
-    private LocalDateTime updateTime;   //수정 시간
+    public void removeStock(int StockNumber){
+        int restStock = this.stockNumber - StockNumber;
+        if(restStock<0){
+            throw new OutOfStockException("상품의 재고가 부족합니다.(현재 재고량: " + this.stockNumber + ")");
+        }
+        this.stockNumber = restStock;
+    }
 }
